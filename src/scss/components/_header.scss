@@ -1,0 +1,63 @@
+@import '../variables';
+
+.header {
+	border-bottom: 1px solid $gray-line;
+	padding: 15px 0;
+
+	.container {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	&__nav {
+		display: flex;
+		align-items: center;
+		ul {
+			display: flex;
+			gap: 15px;
+			li {
+				a {
+					font-size: 1rem;
+					font-weight: 300;
+				}
+			}
+		}
+	}
+
+	&__logo {
+		display: block;
+		width: 100px;
+
+		img {
+			width: 100%;
+			height: auto;
+		}
+	}
+
+	&__cart {
+		display: flex;
+		align-items: center;
+		gap: 20px;
+
+		&__price {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+
+			span {
+				display: block;
+				width: 15px;
+				height: 15px;
+				padding: 10px;
+				background-color: #161619;
+				color: white;
+				border-radius: 9px;
+				font-size: 11px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+		}
+	}
+}
