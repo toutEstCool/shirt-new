@@ -1,12 +1,9 @@
-export const ProductItems = ({
-	imageUrl,
-	name,
-	types,
-	sizes,
-	price,
-	category,
-	rating,
-}) => {
+import { useState } from 'react'
+
+export const ProductItems = ({ name, price, imageUrl, types, sizes }) => {
+	const [activeType, setActiveType] = useState()
+	const [activeSize, setActiveSize] = useState()
+
 	const typeNames = ['cotton', 'synthetics']
 
 	return (
@@ -16,12 +13,22 @@ export const ProductItems = ({
 			<div className='tshirt-block__selector'>
 				<ul>
 					{types.map(typeId => (
-						<li>{typeNames[typeId]}</li>
+						<li
+							onClick={() => setActiveType(typeId)}
+							className={activeType === typeId ? 'active' : ''}
+						>
+							{typeNames[typeId]}
+						</li>
 					))}
 				</ul>
 				<ul>
-					{sizes.map(s => (
-						<li>{s}</li>
+					{sizes.map((size, i) => (
+						<li
+							onClick={() => setActiveSize(i)}
+							className={activeSize === i ? 'active' : ''}
+						>
+							{size}
+						</li>
 					))}
 				</ul>
 			</div>
