@@ -1,0 +1,21 @@
+.not-found-page {
+	height: 70vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+
+	a {
+		button {
+			display: block;
+			color: black;
+			font-weight: 500;
+			font-size: 18px;
+
+			&:hover {
+				color: white;
+			}
+		}
+	}
+}

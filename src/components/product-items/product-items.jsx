@@ -14,6 +14,7 @@ export const ProductItems = ({ name, price, imageUrl, types, sizes }) => {
 				<ul>
 					{types.map(typeId => (
 						<li
+							key={typeId}
 							onClick={() => setActiveType(typeId)}
 							className={activeType === typeId ? 'active' : ''}
 						>
@@ -24,6 +25,7 @@ export const ProductItems = ({ name, price, imageUrl, types, sizes }) => {
 				<ul>
 					{sizes.map((size, i) => (
 						<li
+							key={i}
 							onClick={() => setActiveSize(i)}
 							className={activeSize === i ? 'active' : ''}
 						>
