@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { BsCart2 } from 'react-icons/bs'
+import { Search } from '../search/search'
+import { useState } from 'react'
 
-export const Header = () => {
+export const Header = ({ searchValue, setSearchValue }) => {
+	const [searchBlockOpened, setSearchBlockOpened] = useState(false)
 	return (
 		<header className='header'>
 			<div className='container'>
@@ -23,9 +26,21 @@ export const Header = () => {
 				<Link className='header__logo' to='/'>
 					<img src='assets/images/logo.png' />
 				</Link>
+
+				{searchBlockOpened && (
+					<Search
+						setSearchBlockOpened={setSearchBlockOpened}
+						searchValue={searchValue}
+						setSearchValue={setSearchValue}
+					/>
+				)}
 				<ul className='header__cart'>
 					<li>
-						<AiOutlineSearch width={16} hanging={16} />
+						<AiOutlineSearch
+							width={16}
+							hanging={16}
+							onClick={() => setSearchBlockOpened(true)}
+						/>
 					</li>
 					<li>
 						<a style={{ fontSize: '16px', fontWeight: 700 }} href='/'>

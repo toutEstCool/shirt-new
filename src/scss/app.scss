@@ -2,6 +2,14 @@
 @import 'libs/normalize';
 @import 'components/all';
 
+body {
+	position: relative;
+}
+
+svg {
+	cursor: pointer;
+}
+
 .wrapper {
 	width: calc(100vw - 100px);
 	height: 100%;
@@ -221,7 +229,7 @@
 
 				&:last-of-type {
 					b {
-						color: $orange;
+						// color: $orange;
 					}
 				}
 			}

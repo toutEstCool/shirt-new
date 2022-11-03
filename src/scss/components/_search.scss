@@ -1,0 +1,36 @@
+@import '../variables';
+
+.search {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 70px;
+	z-index: 2;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	background-color: #161619;
+	&-block {
+		width: 800px;
+		display: flex;
+		align-items: center;
+		gap: 15px;
+		label {
+			font-size: 20px;
+			font-weight: 500;
+			letter-spacing: 0.6px;
+			cursor: pointer;
+			color: white;
+		}
+		input {
+			width: 80%;
+			padding: 10px 15px;
+			border: none;
+			outline: none;
+			cursor: pointer;
+			border-radius: 8px;
+		}
+	}
+}

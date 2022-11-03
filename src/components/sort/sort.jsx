@@ -11,8 +11,8 @@ export const Sort = ({ value, onChangeSort }) => {
 		{ name: 'alphabetically ⬇', sortProperty: '-name' },
 	]
 
-	const setOpenedListItem = i => {
-		onChangeSort(i)
+	const setOpenedListItem = obj => {
+		onChangeSort(obj)
 		setOpened(false)
 	}
 
