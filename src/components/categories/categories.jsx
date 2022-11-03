@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
-export const Categories = () => {
-	const [activeCategory, setActiveCategory] = useState(0)
+export const Categories = ({ value, onChangeCategory }) => {
 	const category = ['All', 'Men"s', 'Female', 'Childish']
 
 	return (
@@ -10,8 +9,8 @@ export const Categories = () => {
 				{category.map((c, i) => (
 					<li
 						key={c}
-						className={activeCategory === i ? 'active' : ''}
-						onClick={() => setActiveCategory(i)}
+						className={value === i ? 'active' : ''}
+						onClick={() => onChangeCategory(i)}
 					>
 						{c}
 					</li>

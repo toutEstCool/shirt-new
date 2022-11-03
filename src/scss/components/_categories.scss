@@ -1,6 +1,20 @@
 @import '../variables';
 
 .categories {
+	@media all and (max-width: 768px) {
+		display: flex;
+		justify-content: center;
+	}
+
+	@media all and (max-width: 425px) {
+		width: 300px;
+		overflow: scroll;
+		padding: 20px 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
 	ul {
 		display: flex;
 		align-items: center;

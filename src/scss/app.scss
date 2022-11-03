@@ -1,10 +1,6 @@
 @import 'variables';
 @import 'libs/normalize';
-
 @import 'components/all';
-
-body {
-}
 
 .wrapper {
 	width: calc(100vw - 100px);
@@ -31,6 +27,13 @@ body {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+
+		@media all and (max-width: 768px) {
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			gap: 20px;
+		}
 	}
 }
 
