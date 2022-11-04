@@ -1,5 +1,6 @@
-import { NotFoundBlock } from "../components/not-found-block";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+
+import { NotFoundBlock } from '../components/not-found-block';
 
 export const NotFound = () => {
   return (
