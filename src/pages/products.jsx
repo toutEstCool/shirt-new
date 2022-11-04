@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 
 import { SearchContext } from '../App'
 import { Categories } from '../components/categories/categories'
@@ -11,10 +12,10 @@ const URL = process.env.REACT_APP_API_URL
 
 export const Products = () => {
   const { searchValue } = useContext(SearchContext)
+  const activeCategory = useSelector((state) => state.filter.activeCategory)
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
   const [items, setItems] = useState([])
-  const [activeCategory, setActiveCategory] = useState(0)
   const [activeSort, setActiveSort] = useState({
     name: 'popularity',
     sortProperty: 'rating',
@@ -43,10 +44,7 @@ export const Products = () => {
   return (
     <>
       <div className="content__top">
-        <Categories
-          value={activeCategory}
-          onChangeCategory={(i) => setActiveCategory(i)}
-        />
+        <Categories value={activeCategory} />
         <Sort value={activeSort} onChangeSort={(obj) => setActiveSort(obj)} />
       </div>
       <div
