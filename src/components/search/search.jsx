@@ -1,10 +1,10 @@
-import { IoMdCloseCircleOutline } from 'react-icons/io';
+import { useContext } from 'react'
+import { IoMdCloseCircleOutline } from 'react-icons/io'
 
-export const Search = ({
-  setSearchBlockOpened,
-  searchValue,
-  setSearchValue,
-}) => {
+import { SearchContext } from '../../App'
+
+export const Search = ({ setSearchBlockOpened }) => {
+  const { searchValue, setSearchValue } = useContext(SearchContext)
   return (
     <div className="search">
       <div className="search-block">
@@ -24,5 +24,5 @@ export const Search = ({
         />
       </div>
     </div>
-  );
-};
+  )
+}

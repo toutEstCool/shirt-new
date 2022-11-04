@@ -1,43 +1,44 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react'
 
-import { Categories } from '../components/categories/categories';
-import { Pagination } from '../components/pagination/pagination';
-import { ProductItems } from '../components/product-items/product-items';
-import { Skeleton } from '../components/product-items/skeleton';
-import { Sort } from '../components/sort/sort';
+import { SearchContext } from '../App'
+import { Categories } from '../components/categories/categories'
+import { Pagination } from '../components/pagination/pagination'
+import { ProductItems } from '../components/product-items/product-items'
+import { Skeleton } from '../components/product-items/skeleton'
+import { Sort } from '../components/sort/sort'
 
-const URL = process.env.REACT_APP_API_URL;
+const URL = process.env.REACT_APP_API_URL
 
-export const Products = ({ searchValue }) => {
-  const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [items, setItems] = useState([]);
-  const [activeCategory, setActiveCategory] = useState(0);
+export const Products = () => {
+  const { searchValue } = useContext(SearchContext)
+  const [loading, setLoading] = useState(true)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [items, setItems] = useState([])
+  const [activeCategory, setActiveCategory] = useState(0)
   const [activeSort, setActiveSort] = useState({
     name: 'popularity',
     sortProperty: 'rating',
-  });
+  })
 
-  const orderBy = activeSort.sortProperty.includes('-') ? 'asc' : 'desc';
-  const sortBy = activeSort.sortProperty.replace('-', '');
-  const categoryBy = activeCategory > 0 ? `category=${activeCategory}` : '';
+  const orderBy = activeSort.sortProperty.includes('-') ? 'asc' : 'desc'
+  const sortBy = activeSort.sortProperty.replace('-', '')
+  const categoryBy = activeCategory > 0 ? `category=${activeCategory}` : ''
+  const searchRequest = searchValue ? `&search=${searchValue}` : ''
 
   useEffect(() => {
-    setLoading(true);
+    setLoading(true)
     fetch(
-      `${URL}?${categoryBy}&sortBy=${sortBy}&order=${orderBy}&page=${currentPage}&limit=3`,
+      `${URL}?${categoryBy}&sortBy=${sortBy}&order=${orderBy}&page=${currentPage}&limit=3${searchRequest}`,
     )
       .then((arr) => arr.json())
       .then((data) => {
-        setItems(data);
-        setLoading(false);
-      });
-  }, [activeCategory, activeSort, currentPage]);
+        setItems(data)
+        setLoading(false)
+      })
+  }, [activeCategory, activeSort, currentPage, searchValue])
 
-  const skeletons = [...new Array(6)].map((_, i) => <Skeleton key={i} />);
-  const products = items
-    .filter((obj) => obj.name.toLowerCase().includes(searchValue.toLowerCase()))
-    .map((obj) => <ProductItems key={obj.id} {...obj} />);
+  const skeletons = [...new Array(6)].map((_, i) => <Skeleton key={i} />)
+  const products = items.map((obj) => <ProductItems key={obj.id} {...obj} />)
 
   return (
     <>
@@ -62,5 +63,5 @@ export const Products = ({ searchValue }) => {
       </div>
       <div className="content__items">{loading ? skeletons : products}</div>
     </>
-  );
-};
+  )
+}

@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import { AiOutlineSearch } from 'react-icons/ai';
-import { BsCart2 } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
+import { useState } from 'react'
+import { AiOutlineSearch } from 'react-icons/ai'
+import { BsCart2 } from 'react-icons/bs'
+import { Link } from 'react-router-dom'
 
-import { Search } from '../search/search';
+import { Search } from '../search/search'
 
-export const Header = ({ searchValue, setSearchValue }) => {
-  const [searchBlockOpened, setSearchBlockOpened] = useState(false);
+export const Header = () => {
+  const [searchBlockOpened, setSearchBlockOpened] = useState(false)
   return (
     <header className="header">
       <div className="container">
@@ -29,11 +29,7 @@ export const Header = ({ searchValue, setSearchValue }) => {
         </Link>
 
         {searchBlockOpened && (
-          <Search
-            setSearchBlockOpened={setSearchBlockOpened}
-            searchValue={searchValue}
-            setSearchValue={setSearchValue}
-          />
+          <Search setSearchBlockOpened={setSearchBlockOpened} />
         )}
         <ul className="header__cart">
           <li>
@@ -57,5 +53,5 @@ export const Header = ({ searchValue, setSearchValue }) => {
         </ul>
       </div>
     </header>
-  );
-};
+  )
+}
