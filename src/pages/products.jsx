@@ -1,5 +1,8 @@
+import axios from 'axios'
+import qs from 'qs'
 import { useContext, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 import { SearchContext } from '../App'
 import { Categories } from '../components/categories/categories'
@@ -12,38 +15,46 @@ import { setCategoryId } from '../redux/slices/filterSlice'
 const URL = process.env.REACT_APP_API_URL
 
 export const Products = () => {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
+  const activeSort = useSelector(
+    (state) => state.filter.activeSort.sortProperty,
+  )
   const activeCategoryId = useSelector((state) => state.filter.activeCategory)
 
   const { searchValue } = useContext(SearchContext)
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
   const [items, setItems] = useState([])
-  const [activeSort, setActiveSort] = useState({
-    name: 'popularity',
-    sortProperty: 'rating',
-  })
 
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id))
   }
 
-  const orderBy = activeSort.sortProperty.includes('-') ? 'asc' : 'desc'
-  const sortBy = activeSort.sortProperty.replace('-', '')
+  const orderBy = activeSort.includes('-') ? 'asc' : 'desc'
+  const sortBy = activeSort.replace('-', '')
   const categoryBy = activeCategoryId > 0 ? `category=${activeCategoryId}` : ''
   const searchRequest = searchValue ? `&search=${searchValue}` : ''
 
   useEffect(() => {
     setLoading(true)
-    fetch(
-      `${URL}?${categoryBy}&sortBy=${sortBy}&order=${orderBy}&page=${currentPage}&limit=3${searchRequest}`,
-    )
-      .then((arr) => arr.json())
-      .then((data) => {
-        setItems(data)
+    axios
+      .get(
+        `${URL}?${categoryBy}&sortBy=${sortBy}&order=${orderBy}&page=${currentPage}&limit=3${searchRequest}`,
+      )
+      .then((res) => {
+        setItems(res.data)
         setLoading(false)
       })
   }, [activeCategoryId, activeSort, currentPage, searchValue])
+
+  useEffect(() => {
+    const queryParams = qs.stringify({
+      category: activeCategoryId,
+      sort: activeSort,
+    })
+    navigate(`?${queryParams}`)
+  }, [activeCategoryId, activeSort])
 
   const skeletons = [...new Array(6)].map((_, i) => <Skeleton key={i} />)
   const products = items.map((obj) => <ProductItems key={obj.id} {...obj} />)
@@ -55,7 +66,7 @@ export const Products = () => {
           value={activeCategoryId}
           onChangeCategory={onChangeCategory}
         />
-        <Sort value={activeSort} onChangeSort={(obj) => setActiveSort(obj)} />
+        <Sort />
       </div>
       <div
         style={{

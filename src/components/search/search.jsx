@@ -1,10 +1,25 @@
-import { useContext } from 'react'
+import debounce from 'lodash.debounce'
+import { useCallback, useContext, useState } from 'react'
 import { IoMdCloseCircleOutline } from 'react-icons/io'
 
 import { SearchContext } from '../../App'
 
 export const Search = ({ setSearchBlockOpened }) => {
-  const { searchValue, setSearchValue } = useContext(SearchContext)
+  const [value, setValue] = useState('')
+  const { setSearchValue } = useContext(SearchContext)
+
+  const updateSearchValue = useCallback(
+    debounce((str) => {
+      setSearchValue(str)
+    }, 500),
+    [],
+  )
+
+  const changeInputValue = (e) => {
+    updateSearchValue(e.target.value)
+    setValue(e.target.value)
+  }
+
   return (
     <div className="search">
       <div className="search-block">
@@ -12,8 +27,8 @@ export const Search = ({ setSearchBlockOpened }) => {
         <input
           id="search"
           type="search"
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
+          value={value}
+          onChange={changeInputValue}
           placeholder="Enter what you're looking for"
         />
         <IoMdCloseCircleOutline
