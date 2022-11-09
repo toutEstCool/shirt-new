@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { SearchContext } from '../App'
 import { Categories } from '../components/categories/categories'
@@ -7,12 +7,15 @@ import { Pagination } from '../components/pagination/pagination'
 import { ProductItems } from '../components/product-items/product-items'
 import { Skeleton } from '../components/product-items/skeleton'
 import { Sort } from '../components/sort/sort'
+import { setCategoryId } from '../redux/slices/filterSlice'
 
 const URL = process.env.REACT_APP_API_URL
 
 export const Products = () => {
+  const dispatch = useDispatch()
+  const activeCategoryId = useSelector((state) => state.filter.activeCategory)
+
   const { searchValue } = useContext(SearchContext)
-  const activeCategory = useSelector((state) => state.filter.activeCategory)
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
   const [items, setItems] = useState([])
@@ -21,9 +24,13 @@ export const Products = () => {
     sortProperty: 'rating',
   })
 
+  const onChangeCategory = (id) => {
+    dispatch(setCategoryId(id))
+  }
+
   const orderBy = activeSort.sortProperty.includes('-') ? 'asc' : 'desc'
   const sortBy = activeSort.sortProperty.replace('-', '')
-  const categoryBy = activeCategory > 0 ? `category=${activeCategory}` : ''
+  const categoryBy = activeCategoryId > 0 ? `category=${activeCategoryId}` : ''
   const searchRequest = searchValue ? `&search=${searchValue}` : ''
 
   useEffect(() => {
@@ -36,7 +43,7 @@ export const Products = () => {
         setItems(data)
         setLoading(false)
       })
-  }, [activeCategory, activeSort, currentPage, searchValue])
+  }, [activeCategoryId, activeSort, currentPage, searchValue])
 
   const skeletons = [...new Array(6)].map((_, i) => <Skeleton key={i} />)
   const products = items.map((obj) => <ProductItems key={obj.id} {...obj} />)
@@ -44,7 +51,10 @@ export const Products = () => {
   return (
     <>
       <div className="content__top">
-        <Categories value={activeCategory} />
+        <Categories
+          value={activeCategoryId}
+          onChangeCategory={onChangeCategory}
+        />
         <Sort value={activeSort} onChangeSort={(obj) => setActiveSort(obj)} />
       </div>
       <div
